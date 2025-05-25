@@ -1,5 +1,7 @@
+import streamlit as st
 import psycopg2
 import json
+
 
 # Connect to PostgreSQL using Streamlit secrets
 conn = psycopg2.connect(
@@ -22,7 +24,7 @@ CREATE TABLE IF NOT EXISTS student_predictions (
 )
 """)
 conn.commit()
-import streamlit as st
+# import streamlit as st
 
 # ✅ Must be FIRST Streamlit command!
 st.set_page_config(page_title="Edu-Guide", layout="centered")
