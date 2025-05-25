@@ -1,3 +1,27 @@
+import psycopg2
+import json
+
+# Connect to PostgreSQL using Streamlit secrets
+conn = psycopg2.connect(
+    host=st.secrets["db_host"],
+    database=st.secrets["db_name"],
+    user=st.secrets["db_user"],
+    password=st.secrets["db_password"],
+    port=st.secrets["db_port"]
+)
+cur = conn.cursor()
+
+# Create table if it doesn't exist
+cur.execute("""
+CREATE TABLE IF NOT EXISTS student_predictions (
+    id SERIAL PRIMARY KEY,
+    student_data JSON,
+    prediction_label VARCHAR(255),
+    recommendation TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+""")
+conn.commit()
 import streamlit as st
 
 # ✅ Must be FIRST Streamlit command!
@@ -250,62 +274,76 @@ if submitted:
 # ⬇️ Replaced by this:
         prediction = analyze_performance(original_input)
         st.info("🔧 Using analytical method for prediction")
-
-        
+        student_record = {
+        "Age": Age,
+        "Sex": Sex,
+        "Program": Program,
+        "Stress_Level": Stress_Level,
+        "average_sleep_duration": average_sleep_duration,
+        "Weekly_study_time": Weekly_study_time__________________,
+        "SEM_1": SEM_1,
+        "SEM_2": SEM_2,
+        "SEM_3": SEM_3,
+        "SEM_4": SEM_4,
+        "SEM_5": SEM_5
+    }   
+        cur.execute("""
+    INSERT INTO student_predictions (student_data, prediction_label, recommendation)
+    VALUES (%s, %s, %s)
+    """, (
+        json.dumps(student_record),
+        performance_categories[prediction]["label"],
+        performance_categories[prediction]["recommendations"]
+    ))
+    conn.commit()
         # Show debug information
-        avg_marks = (SEM_1 + SEM_2 + SEM_3 + SEM_4 + SEM_5) / 5
+    avg_marks = (SEM_1 + SEM_2 + SEM_3 + SEM_4 + SEM_5) / 5
         
         # Academic score calculation (0-50)
-        if avg_marks >= 85:
+    if avg_marks >= 85:
             academic_score = 50
-        elif avg_marks >= 75:
-            academic_score = 40
-        elif avg_marks >= 65:
-            academic_score = 30
-        elif avg_marks >= 55:
-            academic_score = 20
-        elif avg_marks >= 45:
+    elif avg_marks >= 45:
             academic_score = 10
-        else:
+    else:
             academic_score = 5
         
         # Study score calculation (0-30)
-        if Weekly_study_time__________________ >= 25:
+    if Weekly_study_time__________________ >= 25:
             study_score = 30
-        elif Weekly_study_time__________________ >= 20:
+    elif Weekly_study_time__________________ >= 20:
             study_score = 25
-        elif Weekly_study_time__________________ >= 15:
+    elif Weekly_study_time__________________ >= 15:
             study_score = 20
-        elif Weekly_study_time__________________ >= 10:
+    elif Weekly_study_time__________________ >= 10:
             study_score = 15
-        elif Weekly_study_time__________________ >= 5:
+    elif Weekly_study_time__________________ >= 5:
             study_score = 10
-        else:
+    else:
             study_score = 5
             
         # Sleep score (0-10)
-        if 7 <= average_sleep_duration <= 9:
+    if 7 <= average_sleep_duration <= 9:
             sleep_score = 10
-        elif 6 <= average_sleep_duration < 7 or 9 < average_sleep_duration <= 10:
+    elif 6 <= average_sleep_duration < 7 or 9 < average_sleep_duration <= 10:
             sleep_score = 8
-        elif 5 <= average_sleep_duration < 6 or 10 < average_sleep_duration <= 11:
+    elif 5 <= average_sleep_duration < 6 or 10 < average_sleep_duration <= 11:
             sleep_score = 6
-        else:
+    else:
             sleep_score = 3
             
         # Stress score (0-10)
-        if Stress_Level <= 2:
+    if Stress_Level <= 2:
             stress_score = 10
-        elif Stress_Level == 3:
+    elif Stress_Level == 3:
             stress_score = 7
-        elif Stress_Level == 4:
+    elif Stress_Level == 4:
             stress_score = 4
-        else:
+    else:
             stress_score = 1
             
-        total_score = academic_score + study_score + sleep_score + stress_score
+    total_score = academic_score + study_score + sleep_score + stress_score
         
-        with st.expander("🔍 Scoring Breakdown (Debug Info)"):
+    with st.expander("🔍 Scoring Breakdown (Debug Info)"):
             col1, col2 = st.columns(2)
             with col1:
                 st.write(f"**Average Marks:** {avg_marks:.1f}/100")
