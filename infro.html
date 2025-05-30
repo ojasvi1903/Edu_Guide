@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edu-Guide Project Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!--
+    Narrative Plan for Edu-Guide Infographic:
+    The infographic will introduce Edu-Guide as a solution for personalized student learning.
+    It will then detail the project's architecture, from data ingestion and model training to the Streamlit application and database storage.
+    Key features like performance categorization and personalized recommendations will be highlighted.
+    Finally, it will summarize the benefits for students and institutions.
+    Chosen Color Palette: Energetic & Playful (Primary: #118AB2 (Blue), Secondary: #06D6A0 (Teal), Accent1: #FFD166 (Yellow), Accent2: #FF6B6B (Orange), Text/Dark: #073B4C (Dark Blue), Background: #F7FAFC)
+
+    Visualization Plan (NO SVG, NO MERMAID JS):
+    1.  Project Overview: Inform -> Text (HTML) -> Explains the project's purpose.
+    2.  System Architecture Flow: Organize -> Structured HTML/CSS Flow (Tailwind, Unicode Arrows) -> Visualizes the end-to-end process.
+    3.  Key Data Inputs: Inform -> List with Icons (HTML `<ul>` + Unicode) -> Shows what data drives the system.
+    4.  Performance Categories Distribution (Illustrative): Compare (Composition) -> Donut Chart (Chart.js Canvas) -> Hypothetical breakdown of student performance.
+    5.  Recommendation Types: Inform -> List with Icons (HTML `<ul>` + Unicode) -> Highlights the personalized output.
+    6.  Technology Stack: Inform -> List with Icons (HTML `<ul>` + Unicode) -> Presents the core technologies used.
+    7.  Benefits: Inform -> List with Icons (HTML `<ul>` + Unicode) -> Summarizes advantages for users.
+
+    Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in this output. All diagrams are HTML/CSS or Canvas-based via Chart.js.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F7FAFC; /* Light Gray Background */
+            color: #073B4C; /* Dark Blue Text */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px; /* Default max-width for smaller charts */
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px; /* Base height */
+            max-height: 350px; /* Max height */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .chart-container {
+                height: 300px;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .chart-container {
+                height: 350px;
+                max-width: 600px;
+            }
+        }
+        .info-card {
+            background-color: white;
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            padding: 1.5rem; /* p-6 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            border-left: 5px solid #118AB2; /* Blue Accent */
+        }
+        .section-title {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            color: #073B4C; /* Dark Blue */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .sub-section-title {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 600; /* font-semibold */
+            color: #118AB2; /* Blue */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .text-accent-orange { color: #FF6B6B; }
+        .text-accent-yellow { color: #FFD166; }
+        .text-accent-teal { color: #06D6A0; }
+        .bg-accent-blue { background-color: #118AB2; }
+        .bg-accent-teal { background-color: #06D6A0; }
+        .bg-accent-yellow { background-color: #FFD166; }
+        .bg-accent-orange { background-color: #FF6B6B; }
+
+        .flow-step {
+            background-color: #EBF8FF; /* Light Blue */
+            border: 2px solid #118AB2; /* Blue */
+            color: #073B4C;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #118AB2; /* Blue */
+            margin: 0 0.5rem;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .icon-list-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .icon-list-item .icon {
+            font-size: 1.5rem;
+            margin-right: 0.75rem;
+            color: #118AB2; /* Blue */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-accent-blue text-white py-12 px-4 text-center rounded-b-xl shadow-lg">
+        <h1 class="text-5xl font-bold mb-4">Edu-Guide: Personalized Learning System</h1>
+        <p class="text-xl max-w-3xl mx-auto">
+            Empowering students through data-driven insights and tailored recommendations for academic success and holistic development.
+        </p>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <section id="project-overview" class="mb-12">
+            <h2 class="section-title">Project Overview</h2>
+            <p class="text-lg text-center mb-8 max-w-2xl mx-auto">
+                The Edu-Guide project leverages machine learning to analyze various student attributes, including academic performance, study habits, and wellness factors. Its primary goal is to predict a student's performance category and provide highly personalized recommendations for improvement and advanced learning.
+            </p>
+        </section>
+
+        <section id="system-architecture" class="mb-12">
+            <h2 class="section-title">System Architecture Flow</h2>
+            <p class="text-lg text-center mb-8 max-w-2xl mx-auto">
+                Edu-Guide operates through a robust architecture involving offline model training and an interactive online application, all supported by a persistent database.
+            </p>
+            <div class="info-card">
+                <h3 class="sub-section-title">End-to-End Process</h3>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-2 overflow-x-auto py-4">
+                    <div class="flow-step">1. Raw Student Data (.xlsx)</div>
+                    <div class="flow-arrow hidden md:flex">➔</div>
+                    <div class="md:hidden text-3xl text-center my-2">⬇️</div>
+                    <div class="flow-step">2. Data Preprocessing (Python)</div>
+                    <div class="flow-arrow hidden md:flex">➔</div>
+                    <div class="md:hidden text-3xl text-center my-2">⬇️</div>
+                    <div class="flow-step">3. ML Model Training (XGBoost)</div>
+                    <div class="flow-arrow hidden md:flex">➔</div>
+                    <div class="md:hidden text-3xl text-center my-2">⬇️</div>
+                    <div class="flow-step">4. Model Persistence (.pkl)</div>
+                    <div class="flow-arrow hidden md:flex">➔</div>
+                    <div class="md:hidden text-3xl text-center my-2">⬇️</div>
+                    <div class="flow-step">5. Streamlit Web App (User Input)</div>
+                    <div class="flow-arrow hidden md:flex">➔</div>
+                    <div class="md:hidden text-3xl text-center my-2">⬇️</div>
+                    <div class="flow-step">6. Performance Prediction</div>
+                    <div class="flow-arrow hidden md:flex">➔</div>
+                    <div class="md:hidden text-3xl text-center my-2">⬇️</div>
+                    <div class="flow-step">7. Personalized Recommendations</div>
+                    <div class="flow-arrow hidden md:flex">➔</div>
+                    <div class="md:hidden text-3xl text-center my-2">⬇️</div>
+                    <div class="flow-step">8. Database Storage (PostgreSQL)</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="key-features" class="mb-12">
+            <h2 class="section-title">Key Features & Insights</h2>
+            <p class="text-lg text-center mb-8 max-w-2xl mx-auto">
+                Edu-Guide's core strength lies in its ability to process diverse student data and deliver actionable insights, fostering continuous improvement.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="info-card">
+                    <h3 class="sub-section-title">Key Data Inputs</h3>
+                    <p class="text-md text-gray-700 mb-4">The system utilizes a comprehensive set of student data points for accurate analysis and prediction.</p>
+                    <ul class="list-none space-y-2">
+                        <li class="icon-list-item"><span class="icon">👤</span> Student Demographics (Age, Sex, Program)</li>
+                        <li class="icon-list-item"><span class="icon">📚</span> Academic Records (Semester Marks)</li>
+                        <li class="icon-list-item"><span class="icon">⏰</span> Study Habits (Weekly Study Time)</li>
+                        <li class="icon-list-item"><span class="icon">🧘</span> Wellness Indicators (Stress Level, Sleep Duration)</li>
+                        <li class="icon-list-item"><span class="icon">🌐</span> Other Lifestyle Factors</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3 class="sub-section-title">Performance Categories</h3>
+                    <p class="text-md text-gray-700 mb-4">Students are categorized into three distinct performance levels, each with tailored support strategies.</p>
+                    <div class="chart-container h-[250px] md:h-[300px]">
+                        <canvas id="performanceCategoriesChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2 text-center">Illustrative distribution of students across categories.</p>
+                </div>
+            </div>
+            <div class="info-card md:col-span-2">
+                <h3 class="sub-section-title">Personalized Recommendations</h3>
+                <p class="text-md text-gray-700 mb-4">Beyond prediction, Edu-Guide offers specific, actionable advice and resources tailored to each student's needs.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <h4 class="font-semibold text-accent-orange mb-2">Needs Improvement</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li>Basic concepts & fundamentals</li>
+                            <li>Structured study schedules</li>
+                            <li>Seeking instructor guidance</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-accent-yellow mb-2">Average Performance</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li>Active learning techniques</li>
+                            <li>Peer study groups</li>
+                            <li>Applying concepts to real-world problems</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-accent-teal mb-2">High Performance</h4>
+                        <ul class="list-disc list-inside text-gray-700 text-sm">
+                            <li>Advanced learning opportunities</li>
+                            <li>Mentoring other students</li>
+                            <li>Developing specialized skills</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="technology-stack" class="mb-12">
+            <h2 class="section-title">Core Technology Stack</h2>
+            <p class="text-lg text-center mb-8 max-w-2xl mx-auto">
+                Edu-Guide is built upon a robust and scalable technology foundation, ensuring reliable performance and data integrity.
+            </p>
+            <div class="info-card max-w-2xl mx-auto">
+                <ul class="list-none grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <li class="icon-list-item"><span class="icon">🐍</span> Python (Core Logic & ML)</li>
+                    <li class="icon-list-item"><span class="icon">🚀</span> Streamlit (Web Application)</li>
+                    <li class="icon-list-item"><span class="icon">🧠</span> XGBoost (Machine Learning Model)</li>
+                    <li class="icon-list-item"><span class="icon">🗄️</span> PostgreSQL (Database)</li>
+                    <li class="icon-list-item"><span class="icon">📊</span> Chart.js (Data Visualization)</li>
+                    <li class="icon-list-item"><span class="icon">🛠️</span> Tailwind CSS (UI/UX Styling)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="benefits" class="text-center">
+            <h2 class="section-title">Benefits of Edu-Guide</h2>
+            <p class="text-lg mb-8 max-w-3xl mx-auto">
+                Edu-Guide offers significant advantages for both students seeking to optimize their learning journey and institutions aiming to provide targeted support.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="info-card border-l-accent-teal">
+                    <h3 class="sub-section-title text-accent-teal">For Students 🎓</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700 text-left">
+                        <li>Personalized learning paths</li>
+                        <li>Improved academic performance</li>
+                        <li>Better time management & study habits</li>
+                        <li>Access to relevant learning resources</li>
+                        <li>Holistic development support</li>
+                    </ul>
+                </div>
+                <div class="info-card border-l-accent-orange">
+                    <h3 class="sub-section-title text-accent-orange">For Educators & Institutions 🏫</h3>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700 text-left">
+                        <li>Data-driven student support</li>
+                        <li>Early identification of at-risk students</li>
+                        <li>Enhanced educational outcomes</li>
+                        <li>Optimized resource allocation</li>
+                        <li>Insight into student well-being trends</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-8 mt-12 border-t border-gray-300">
+        <p class="text-gray-600">&copy; 2025 Edu-Guide Project. All Rights Reserved.</p>
+        <p class="text-sm text-gray-500 mt-1">Driving academic excellence through intelligent recommendations.</p>
+    </footer>
+
+    <script>
+        const CHART_BLUE = '#118AB2';
+        const CHART_TEAL = '#06D6A0';
+        const CHART_YELLOW = '#FFD166';
+        const CHART_ORANGE = '#FF6B6B';
+        const CHART_DARK_BLUE = '#073B4C';
+        const CHART_LIGHT_GRAY = '#E2E8F0';
+
+        function processLabels(labels) {
+            return labels.map(label => {
+                if (label.length > 16) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = '';
+                    for (const word of words) {
+                        if ((currentLine + word).length > 16 && currentLine.length > 0) {
+                            lines.push(currentLine.trim());
+                            currentLine = word + ' ';
+                        } else {
+                            currentLine += word + ' ';
+                        }
+                    }
+                    lines.push(currentLine.trim());
+                    return lines;
+                }
+                return label;
+            });
+        }
+        
+        const tooltipTitleCallback = function(tooltipItems) {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            } else {
+              return label;
+            }
+        };
+
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: CHART_DARK_BLUE,
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    backgroundColor: 'rgba(7, 59, 76, 0.8)', // Dark Blue with opacity
+                    titleFont: { size: 14, weight: 'bold' },
+                    bodyFont: { size: 12 },
+                    padding: 10,
+                    cornerRadius: 4
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { 
+                        color: CHART_DARK_BLUE,
+                        font: { size: 12 }
+                    },
+                    grid: { color: CHART_LIGHT_GRAY }
+                },
+                x: {
+                    ticks: { 
+                        color: CHART_DARK_BLUE,
+                        font: { size: 12 },
+                        maxRotation: 45,
+                        minRotation: 0
+                    },
+                    grid: { color: CHART_LIGHT_GRAY }
+                }
+            }
+        };
+
+        const performanceCategoriesCtx = document.getElementById('performanceCategoriesChart').getContext('2d');
+        new Chart(performanceCategoriesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: processLabels(['Needs Improvement', 'Average Performance', 'High Performance']),
+                datasets: [{
+                    label: 'Student Distribution',
+                    data: [25, 50, 25], /* Illustrative data */
+                    backgroundColor: [CHART_ORANGE, CHART_YELLOW, CHART_TEAL],
+                    borderColor: '#FFFFFF',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                scales: { y: { display: false }, x: { display: false } },
+                cutout: '60%'
+            }
+        });
+    </script>
+</body>
+</html>
